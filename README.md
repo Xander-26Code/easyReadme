@@ -47,16 +47,16 @@ This skill follows the open [Agent Skills](https://agentskills.io/) folder forma
 
 ### Option 1: One Command With `npx skills`
 
-If this skill is published to GitHub, install it with the Skills CLI:
+Install from GitHub with the Skills CLI:
 
 ```bash
-npx skills add <your-github-username>/easy-readme -a claude-code
+npx skills add Xander-26Code/easyReadme -a claude-code
 ```
 
 For global installation across all Claude Code projects:
 
 ```bash
-npx skills add <your-github-username>/easy-readme -a claude-code -g
+npx skills add Xander-26Code/easyReadme -a claude-code -g
 ```
 
 During local development, install from this local folder:
@@ -74,7 +74,7 @@ Useful options:
 | `--copy` | Copy files instead of symlinking. |
 | `-y` | Skip confirmation prompts. |
 
-After publishing the repository, replace `<your-github-username>/easy-readme` with the real GitHub `owner/repo`.
+Repository: https://github.com/Xander-26Code/easyReadme.git
 
 ### Option 2: Manual Install
 
@@ -109,7 +109,7 @@ Claude custom skills can be uploaded as a ZIP file containing the skill folder.
 
 ```bash
 mkdir -p /tmp/easy-readme-package
-rsync -a --delete --exclude '__pycache__' --exclude '*.pyc' /Users/xander/easyReadme/ /tmp/easy-readme-package/easy-readme/
+rsync -a --delete --exclude '.git' --exclude '__pycache__' --exclude '*.pyc' /Users/xander/easyReadme/ /tmp/easy-readme-package/easy-readme/
 cd /tmp/easy-readme-package
 zip -r /Users/xander/easy-readme-claude-skill.zip easy-readme
 ```
@@ -235,7 +235,7 @@ To prepare a Claude upload ZIP manually:
 
 ```bash
 mkdir -p /tmp/easy-readme-package
-rsync -a --delete --exclude '__pycache__' --exclude '*.pyc' /Users/xander/easyReadme/ /tmp/easy-readme-package/easy-readme/
+rsync -a --delete --exclude '.git' --exclude '__pycache__' --exclude '*.pyc' /Users/xander/easyReadme/ /tmp/easy-readme-package/easy-readme/
 cd /tmp/easy-readme-package
 zip -r /Users/xander/easy-readme-claude-skill.zip easy-readme
 ```
@@ -247,7 +247,7 @@ For Team or Enterprise Claude workspaces, upload or share the skill through Clau
 For cross-runtime publication, publish this repository to GitHub and use:
 
 ```bash
-npx skills add <owner>/<repo>
+npx skills add Xander-26Code/easyReadme
 ```
 
 ## Claude Code Notes
