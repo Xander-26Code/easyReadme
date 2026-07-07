@@ -8,16 +8,19 @@ Easy README is a Claude Code skill for turning a project folder into a useful `R
 
 - [Overview](#overview)
 - [Features](#features)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [How It Works](#how-it-works)
 - [Quick Start](#quick-start)
 - [Usage](#usage)
 - [Bundled Scripts](#bundled-scripts)
-- [Packaging And Distribution](#packaging-and-distribution)
+- [Distribution](#distribution)
 - [Claude Code Notes](#claude-code-notes)
 - [Other Compatible Agent Runtimes](#other-compatible-agent-runtimes)
-- [Validation](#validation)
+- [Testing](#testing)
+- [Development](#development)
+- [Contributing](#contributing)
 - [Optional Assets](#optional-assets)
 - [License](#license)
 
@@ -41,6 +44,11 @@ The skill is designed for README creation, README improvement, GitHub documentat
 - Suggests optional media and trust assets, such as screenshots, GIFs, videos, avatars, badges, sponsor links, or star-history charts, only when they are useful and verifiable.
 - Validates generated READMEs for broken local links, missing recommended sections, unsupported package commands, media path issues, and TODO markers.
 
+## Prerequisites
+
+- [Claude Code](https://claude.ai/code) (or another Agent Skills-compatible runtime).
+- Python 3.x — only needed to run the bundled [analyze](#analyze-a-project) and [validate](#validate-a-readme) scripts.
+
 ## Installation
 
 This skill follows the open [Agent Skills](https://agentskills.io/) folder format and is optimized for Claude Code. It can also be used by other skills-compatible agent runtimes.
@@ -62,7 +70,7 @@ npx skills add Xander-26Code/easyReadme -a claude-code -g
 During local development, install from this local folder:
 
 ```bash
-npx skills add /Users/xander/easyReadme -a claude-code -g
+npx skills add . -a claude-code -g
 ```
 
 Useful options:
@@ -82,14 +90,14 @@ Install globally for Claude Code:
 
 ```bash
 mkdir -p ~/.claude/skills/easy-readme
-cp -R /Users/xander/easyReadme/* ~/.claude/skills/easy-readme/
+cp -R ./* ~/.claude/skills/easy-readme/
 ```
 
 Or install only for one project:
 
 ```bash
 mkdir -p .claude/skills/easy-readme
-cp -R /Users/xander/easyReadme/* .claude/skills/easy-readme/
+cp -R ./* .claude/skills/easy-readme/
 ```
 
 Manual install paths:
@@ -109,15 +117,15 @@ Claude custom skills can be uploaded as a ZIP file containing the skill folder.
 
 ```bash
 mkdir -p /tmp/easy-readme-package
-rsync -a --delete --exclude '.git' --exclude '__pycache__' --exclude '*.pyc' /Users/xander/easyReadme/ /tmp/easy-readme-package/easy-readme/
+rsync -a --delete --exclude '.git' --exclude '__pycache__' --exclude '*.pyc' ./ /tmp/easy-readme-package/easy-readme/
 cd /tmp/easy-readme-package
-zip -r /Users/xander/easy-readme-claude-skill.zip easy-readme
+zip -r ../easy-readme-claude-skill.zip easy-readme
 ```
 
 Upload:
 
 ```text
-/Users/xander/easy-readme-claude-skill.zip
+../easy-readme-claude-skill.zip
 ```
 
 ### Option 4: As Plain Reference Material
@@ -229,18 +237,7 @@ The script checks:
 - Common package-manager and Makefile commands.
 - TODO markers.
 
-## Packaging And Distribution
-
-To prepare a Claude upload ZIP manually:
-
-```bash
-mkdir -p /tmp/easy-readme-package
-rsync -a --delete --exclude '.git' --exclude '__pycache__' --exclude '*.pyc' /Users/xander/easyReadme/ /tmp/easy-readme-package/easy-readme/
-cd /tmp/easy-readme-package
-zip -r /Users/xander/easy-readme-claude-skill.zip easy-readme
-```
-
-The resulting archive contains one top-level `easy-readme/` folder with `SKILL.md`, `README.md`, `references/`, and `scripts/`.
+## Distribution
 
 For Team or Enterprise Claude workspaces, upload or share the skill through Claude's skill customization and organization sharing settings when enabled.
 
@@ -263,16 +260,51 @@ npx skills add Xander-26Code/easyReadme
 
 This skill uses the Agent Skills folder shape, so it may be portable to other compatible runtimes. The README and script paths are now optimized for Claude Code first.
 
-## Validation
+## Testing
 
-Current local validation:
+Verify the skill scripts work correctly:
 
 ```bash
+# Run the analyzer against this repository
 python3 scripts/analyze_project.py . --json
+
+# Check that both scripts are syntactically valid
 python3 -m py_compile scripts/analyze_project.py scripts/validate_readme.py
+
+# Validate this README
+python3 scripts/validate_readme.py README.md --project .
 ```
 
-The analyzer currently reports that this repository has no license file.
+All three should pass without errors before submitting changes.
+
+## Development
+
+The skill follows a simple file layout:
+
+| File / Directory | Purpose |
+|---|---|
+| `SKILL.md` | Entrypoint — YAML frontmatter + workflow instructions loaded by Claude Code. |
+| `references/` | Templates, checklists, and pattern examples loaded on demand. |
+| `scripts/` | Deterministic helpers for project analysis and README validation. |
+
+To iterate on the skill:
+
+1. Edit `SKILL.md` to change the workflow or triggers.
+2. Update `references/` to refine templates, patterns, or quality rules.
+3. Modify `scripts/` to improve the analyzer or validator.
+4. Run the [testing steps](#testing) to confirm nothing is broken.
+5. If you change the CLI interface of a script, update the corresponding usage block in this README.
+
+## Contributing
+
+Contributions are welcome. Before opening a PR:
+
+- Run the [testing steps](#testing) and confirm everything passes.
+- Keep `SKILL.md` compatible with the Agent Skills folder format.
+- Follow the existing conventions in `references/` and `scripts/`.
+- Update this README if you add, remove, or rename files.
+
+For larger changes, open an issue first to discuss the approach.
 
 ## Optional Assets
 
@@ -287,4 +319,4 @@ Good future assets would be:
 
 ## License
 
-MIT License
+[MIT](LICENSE)
