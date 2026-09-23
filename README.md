@@ -1,3 +1,5 @@
+
+
 # Easy README
 
 Generate accurate, polished, GitHub-ready README files from real repository facts.
@@ -149,7 +151,7 @@ If a runtime does not support Agent Skills, paste `SKILL.md` into the conversati
 
 ## How It Works
 
-Easy README follows a five-phase workflow:
+Easy README follows a phased workflow:
 
 1. Clarify the README target, audience, tone, and output path.
 2. Extract project facts from manifests, docs, scripts, CI files, deployment files, env examples, and media assets.
